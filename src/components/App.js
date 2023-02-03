@@ -10,6 +10,9 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import DeleteCardPopup from "./DeleteCardPopup";
+import Login from "./Login";
+import Register from "./Register";
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
     const [isEditProfilePopupOpened, setEditProfilePopupOpened] = useState(false);
@@ -20,9 +23,9 @@ function App() {
     const [selectedCard, setSelectorCard] = useState({isOpen: false});
     const [currentUser, setCurrentUser] = useState({});
     const [nameEditButton, setNameEditButton] = useState('Сохранить');
-    const [nameAddButton, setNameAddButton] = useState('Создать')
-    const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
-    const [deletingCard, setDeletingCard] = useState(null);
+    const [nameAddButton, setNameAddButton] = useState('Создать');
+/*    const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
+    const [deletingCard, setDeletingCard] = useState(null);*/
 
     useEffect(() => {
         api.getAllPromise().then(data => {
@@ -102,7 +105,10 @@ function App() {
             if(evt.key === "Escape") closeAllPopups();
           }}>
             <Header />
-              <Main handleEditAvatarClick={handleEditAvatarClick}
+              {/*<Login />*/}
+              <Register />
+              <InfoTooltip />
+{/*              <Main handleEditAvatarClick={handleEditAvatarClick}
                     handleEditProfileClick={handleEditProfileClick}
                     handleAddPlaceClick={handleAddPlaceClick}
                     onCardClick={handleCardClick}
@@ -110,7 +116,7 @@ function App() {
                     onCardDelete={handleCardDelete}
                     cards={cards}
               />
-            <Footer />
+            <Footer />*/}
               <EditProfilePopup
                   isOpen={isEditProfilePopupOpened}
                   onClose={closeAllPopups}
