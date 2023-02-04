@@ -13,6 +13,8 @@ import DeleteCardPopup from "./DeleteCardPopup";
 import Login from "./Login";
 import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
+import {Routes, Route} from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
     const [isEditProfilePopupOpened, setEditProfilePopupOpened] = useState(false);
@@ -24,6 +26,7 @@ function App() {
     const [currentUser, setCurrentUser] = useState({});
     const [nameEditButton, setNameEditButton] = useState('Сохранить');
     const [nameAddButton, setNameAddButton] = useState('Создать');
+    const [loggedIn, setLoggedIn] = useState(false);
 /*    const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
     const [deletingCard, setDeletingCard] = useState(null);*/
 
@@ -105,18 +108,34 @@ function App() {
             if(evt.key === "Escape") closeAllPopups();
           }}>
             <Header />
-              {/*<Login />*/}
-              <Register />
-              <InfoTooltip />
-{/*              <Main handleEditAvatarClick={handleEditAvatarClick}
-                    handleEditProfileClick={handleEditProfileClick}
-                    handleAddPlaceClick={handleAddPlaceClick}
-                    onCardClick={handleCardClick}
-                    onCardLike={handleCardLike}
-                    onCardDelete={handleCardDelete}
-                    cards={cards}
-              />
-            <Footer />*/}
+              <Routes>
+                  <Route path="/" element={
+                      <ProtectedRoute path="/" loggedIn={loggedIn} component={
+                          <Main handleEditAvatarClick={handleEditAvatarClick}
+                                handleEditProfileClick={handleEditProfileClick}
+                                handleAddPlaceClick={handleAddPlaceClick}
+                                onCardClick={handleCardClick}
+                                onCardLike={handleCardLike}
+                                onCardDelete={handleCardDelete}
+                                cards={cards}
+                          />}
+                      />}
+                  />
+                  <Route path="/sign-up" element={ <Register /> } />
+                  <Route path="/sign-in" element={ <Login /> } />
+                  <Route path="*" element={ loggedIn ?
+                      <Main handleEditAvatarClick={handleEditAvatarClick}
+                            handleEditProfileClick={handleEditProfileClick}
+                            handleAddPlaceClick={handleAddPlaceClick}
+                            onCardClick={handleCardClick}
+                            onCardLike={handleCardLike}
+                            onCardDelete={handleCardDelete}
+                            cards={cards}
+                      /> :
+                      <Register />}/>
+              </Routes>
+            <Footer />
+              {/*<InfoTooltip />*/}
               <EditProfilePopup
                   isOpen={isEditProfilePopupOpened}
                   onClose={closeAllPopups}
