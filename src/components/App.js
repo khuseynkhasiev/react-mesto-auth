@@ -1,23 +1,26 @@
-import Header from "./Header";
-import Main from './Main';
-import '../pages/index.css';
-import Footer from "./Footer";
-import ImagePopup from './ImagePopup';
 import {useEffect, useState} from "react";
+import {Routes, Route, useNavigate, Navigate} from "react-router-dom";
+import * as auth from "../auth.js";
+import ProtectedRoute from "./ProtectedRoute.js";
 import api from '../utils/api';
 import CurrentUserContext from "../contexts/CurrentUserContext";
+import '../pages/index.css';
+import Header from "./Header";
+import Main from './Main';
+import Footer from "./Footer";
+import ImagePopup from './ImagePopup';
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import DeleteCardPopup from "./DeleteCardPopup";
 import Login from "./Login";
 import Register from "./Register";
+/*
 import InfoTooltip from "./InfoTooltip";
-import {Routes, Route, useNavigate, Navigate} from "react-router-dom";
-import ProtectedRoute from "./ProtectedRoute";
-import * as auth from "../auth";
+*/
 
 function App() {
+    const navigate = useNavigate();
     const [isEditProfilePopupOpened, setEditProfilePopupOpened] = useState(false);
     const [isAddPlacePopupOpened, setAddPlacePopupOpened] = useState(false);
     const [isEditAvatarProfilePopupOpened, setEditAvatarProfilePopupOpened] = useState(false);
@@ -28,6 +31,7 @@ function App() {
     const [nameEditButton, setNameEditButton] = useState('Сохранить');
     const [nameAddButton, setNameAddButton] = useState('Создать');
     const [loggedIn, setLoggedIn] = useState(false);
+    const [userEmail, setUserEmail] = useState('');
 /*    const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
     const [deletingCard, setDeletingCard] = useState(null);*/
 
@@ -39,6 +43,7 @@ function App() {
             ] = data;
             setCurrentUser(getProfileInfo);
             setCards(getInitialCards);
+            checkToken();
         }).catch((data) => console.log(data.error))
     }, []);
     function handleCardLike(card) {
@@ -103,10 +108,41 @@ function App() {
             .finally(() => setNameAddButton('Создать'))
     }
     function handleLogin({email, password}) {
-        console.log(`email: ${email}, password: ${password}`)
+        console.log(`email: ${email}, password: ${password}`);
+        return auth.authorize(email, password)
+            .then((res) => {
+                console.log(res);
+                if (res.token) {
+                    setUserEmail(email);
+                    localStorage.setItem('jwt', res.token);
+                    console.log(res);
+                    setLoggedIn(true);
+                    navigate("/", {replace: true});
+                }
+            })
     }
-    function handleRegister({email,password}){
-        console.log(`email: ${email}, password: ${password}`)
+    function handleRegister({email, password}){
+        console.log(`email: ${email}, password: ${password}`);
+        return auth.register(email, password)
+            .then((res) => {
+            console.log(res);
+            navigate("/sign-in", {replace: true});
+        })
+    }
+    function handleUserExit(){
+        setLoggedIn(false);
+        localStorage.removeItem('jwt');
+        setUserEmail('');
+    }
+    function checkToken(){
+        const token = localStorage.getItem('jwt');
+        if (token) {
+            auth.getContent(token).then((res) =>{
+                setUserEmail(res.data.email);
+                setLoggedIn(true);
+                navigate("/", {replace: true});
+            })
+        }
     }
 
   return (
@@ -114,25 +150,26 @@ function App() {
           <div className="page" onKeyDown={(evt) => {
             if(evt.key === "Escape") closeAllPopups();
           }}>
-            <Header />
+            <Header email={userEmail} handleUserExit={handleUserExit} loggedIn={loggedIn}/>
               <Routes>
-                  <Route path="/" element={
-                      <ProtectedRoute loggedIn={loggedIn} component={
-                          <Main handleEditAvatarClick={handleEditAvatarClick}
-                                handleEditProfileClick={handleEditProfileClick}
-                                handleAddPlaceClick={handleAddPlaceClick}
-                                onCardClick={handleCardClick}
-                                onCardLike={handleCardLike}
-                                onCardDelete={handleCardDelete}
-                                cards={cards}
+                  <Route path="/"
+                      element={
+                          <ProtectedRoute
+                              loggedIn={loggedIn}
+                              component={Main}
+                              handleEditProfileClick={handleEditProfileClick}
+                              handleAddPlaceClick={handleAddPlaceClick}
+                              onCardClick={handleCardClick}
+                              onCardLike={handleCardLike}
+                              onCardDelete={handleCardDelete}
+                              cards={cards}
                           />}
-                      />}
                   />
-                  <Route path="/signup" element={ <Register handleRegister={handleRegister}/> } />
-                  <Route path="/signin" element={ <Login handleLogin={handleLogin}/> } />
+                  <Route path="/sign-up" element={ <Register handleRegister={handleRegister}/> } />
+                  <Route path="/sign-in" element={ <Login handleLogin={handleLogin}/> } />
                   <Route path="*" element={ loggedIn ?
-                      <Navigate to="/"/> :
-                      <Navigate to="/signup"/>}
+                      <Navigate to="/" /> :
+                      <Navigate to="/sign-up" />}
                   />
               </Routes>
             <Footer />

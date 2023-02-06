@@ -1,9 +1,8 @@
 import FormIn from "./FormIn";
 import {useState} from "react";
-import {Link, Navigate, NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 export default function Register({handleRegister}){
-
     const [userDate, setUserDate] = useState({
         email: '',
         password: '',
@@ -26,7 +25,7 @@ export default function Register({handleRegister}){
             handleSubmit={handleSubmit}
         >
                 <p className="form__subtext">
-                    Уже зарегистрированы?<Link to='/signin' className="form__link"> Войти</Link>
+                    Уже зарегистрированы?<Link to="/sign-in" className="form__link"> Войти</Link>
                 </p>
         </FormIn>
     )
