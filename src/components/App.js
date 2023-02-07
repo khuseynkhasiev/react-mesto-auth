@@ -123,8 +123,6 @@ function App() {
                     navigate("/", {replace: true});
                 }
                 setSignIn(false);
-                setInfoToolTipMessage(false);
-                setInfoToolTip(true);
             })
     }
     function handleRegister({email, password}){

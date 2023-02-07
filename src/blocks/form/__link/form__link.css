@@ -7,6 +7,7 @@
     text-align: center;
     color: #FFFFFF;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .form__link:hover{
