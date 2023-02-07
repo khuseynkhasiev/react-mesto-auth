@@ -2,13 +2,18 @@ import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 
 export default function Header(props){
+/*
     const navigate = useNavigate();
+*/
     const {
         email,
         handleUserExit,
-        loggedIn
+        loggedIn,
+        singIn,
+        handleButtonSignIn,
+        handleButtonSignUp,
     } = props;
-    const [singIn, setSignIn] = useState(true);
+/*    const [singIn, setSignIn] = useState(true);
     function handleButtonExit() {
         handleUserExit();
         setSignIn(true);
@@ -20,7 +25,7 @@ export default function Header(props){
     function handleButtonSignUp() {
         navigate("/sign-up");
         setSignIn(true);
-    }
+    }*/
 
 
     return (
@@ -35,7 +40,7 @@ export default function Header(props){
                     }
                     { loggedIn ?
                         <li className="header__el">
-                            <button className="header__btn" onClick={handleButtonExit}>Выйти</button>
+                            <button className="header__btn" onClick={handleUserExit}>Выйти</button>
                         </li> :
                         singIn ?
                         <li className="header__el">

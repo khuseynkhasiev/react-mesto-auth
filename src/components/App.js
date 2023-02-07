@@ -15,9 +15,7 @@ import AddPlacePopup from "./AddPlacePopup";
 import DeleteCardPopup from "./DeleteCardPopup";
 import Login from "./Login";
 import Register from "./Register";
-/*
 import InfoTooltip from "./InfoTooltip";
-*/
 
 function App() {
     const navigate = useNavigate();
@@ -32,6 +30,10 @@ function App() {
     const [nameAddButton, setNameAddButton] = useState('Создать');
     const [loggedIn, setLoggedIn] = useState(false);
     const [userEmail, setUserEmail] = useState('');
+
+    const [infoToolTipMessage, setInfoToolTipMessage] = useState(false);
+    const [infoToolTip, setInfoToolTip] = useState(false);
+    const [singIn, setSignIn] = useState(true);
 /*    const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
     const [deletingCard, setDeletingCard] = useState(null);*/
 
@@ -67,6 +69,7 @@ function App() {
         setEditAvatarProfilePopupOpened(false);
         setDeleteCardPopupOpened(false);
         setSelectorCard({isOpen: false});
+        setInfoToolTip(false);
     }
     const handleEditAvatarClick = () => {
         setEditAvatarProfilePopupOpened(true);
@@ -119,6 +122,9 @@ function App() {
                     setLoggedIn(true);
                     navigate("/", {replace: true});
                 }
+                setSignIn(false);
+                setInfoToolTipMessage(false);
+                setInfoToolTip(true);
             })
     }
     function handleRegister({email, password}){
@@ -126,13 +132,25 @@ function App() {
         return auth.register(email, password)
             .then((res) => {
             console.log(res);
+            setInfoToolTip(true);
+            setSignIn(false);
+            setInfoToolTipMessage(true);
             navigate("/sign-in", {replace: true});
         })
     }
     function handleUserExit(){
         setLoggedIn(false);
+        setSignIn(true);
         localStorage.removeItem('jwt');
         setUserEmail('');
+    }
+    function handleButtonSignIn() {
+        navigate("/sign-in");
+        setSignIn(false);
+    }
+    function handleButtonSignUp() {
+        navigate("/sign-up");
+        setSignIn(true);
     }
     function checkToken(){
         const token = localStorage.getItem('jwt');
@@ -150,7 +168,15 @@ function App() {
           <div className="page" onKeyDown={(evt) => {
             if(evt.key === "Escape") closeAllPopups();
           }}>
-            <Header email={userEmail} handleUserExit={handleUserExit} loggedIn={loggedIn}/>
+            <Header
+                email={userEmail}
+                handleUserExit={handleUserExit}
+                loggedIn={loggedIn}
+                singIn={singIn}
+                handleButtonSignIn={handleButtonSignIn}
+                handleButtonSignUp={handleButtonSignUp}
+
+            />
               <Routes>
                   <Route path="/"
                       element={
@@ -165,7 +191,7 @@ function App() {
                               cards={cards}
                           />}
                   />
-                  <Route path="/sign-up" element={ <Register handleRegister={handleRegister}/> } />
+                  <Route path="/sign-up" element={ <Register handleRegister={handleRegister} handleButtonSignIn={handleButtonSignIn}/> } />
                   <Route path="/sign-in" element={ <Login handleLogin={handleLogin}/> } />
                   <Route path="*" element={ loggedIn ?
                       <Navigate to="/" /> :
@@ -173,7 +199,11 @@ function App() {
                   />
               </Routes>
             <Footer />
-              {/*<InfoTooltip />*/}
+              <InfoTooltip
+                  infoToolTipMessage={infoToolTipMessage}
+                  infoToolTip={infoToolTip}
+                  onClose={closeAllPopups}
+              />
               <EditProfilePopup
                   isOpen={isEditProfilePopupOpened}
                   onClose={closeAllPopups}

@@ -2,7 +2,7 @@ import FormIn from "./FormIn";
 import {useState} from "react";
 import {Link} from "react-router-dom";
 
-export default function Register({handleRegister}){
+export default function Register({handleRegister, handleButtonSignIn}){
     const [userDate, setUserDate] = useState({
         email: '',
         password: '',
@@ -25,7 +25,7 @@ export default function Register({handleRegister}){
             handleSubmit={handleSubmit}
         >
                 <p className="form__subtext">
-                    Уже зарегистрированы?<Link to="/sign-in" className="form__link"> Войти</Link>
+                    Уже зарегистрированы?<span className="form__link" onClick={handleButtonSignIn}> Войти</span>
                 </p>
         </FormIn>
     )
