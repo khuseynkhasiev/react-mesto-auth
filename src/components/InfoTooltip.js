@@ -1,12 +1,9 @@
-import {useState} from "react";
-
 export default function InfoTooltip(props) {
     const {
         infoToolTipMessage,
         infoToolTip,
         onClose
     } = props
-
     return (
         <div className={`info-tooltip ${infoToolTip ? "popup_opened" : null} `}>
             <div className="info-tooltip__container">

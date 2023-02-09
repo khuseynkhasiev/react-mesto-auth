@@ -1,10 +1,4 @@
-import {useNavigate} from "react-router-dom";
-import {useState} from "react";
-
 export default function Header(props){
-/*
-    const navigate = useNavigate();
-*/
     const {
         email,
         handleUserExit,
@@ -13,21 +7,6 @@ export default function Header(props){
         handleButtonSignIn,
         handleButtonSignUp,
     } = props;
-/*    const [singIn, setSignIn] = useState(true);
-    function handleButtonExit() {
-        handleUserExit();
-        setSignIn(true);
-    }
-    function handleButtonSignIn() {
-        navigate("/sign-in");
-        setSignIn(false);
-    }
-    function handleButtonSignUp() {
-        navigate("/sign-up");
-        setSignIn(true);
-    }*/
-
-
     return (
         <header className="header">
             <div className="header__logo"></div>

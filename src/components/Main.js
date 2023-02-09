@@ -2,7 +2,6 @@ import editPen from '../images/avatar__edit-pen.svg';
 import Card from "./Card";
 import {useContext} from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
-
 export default function Main(props) {
     const {
         handleEditAvatarClick,

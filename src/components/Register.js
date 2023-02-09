@@ -1,13 +1,10 @@
 import FormIn from "./FormIn";
 import {useState} from "react";
-import {Link} from "react-router-dom";
-
 export default function Register({handleRegister, handleButtonSignIn}){
     const [userDate, setUserDate] = useState({
         email: '',
         password: '',
     })
-
     function handleUserDate(e){
         const {name, value} = e.target;
         setUserDate({...userDate, [name]: value})

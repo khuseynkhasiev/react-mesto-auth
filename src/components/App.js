@@ -111,14 +111,11 @@ function App() {
             .finally(() => setNameAddButton('Создать'))
     }
     function handleLogin({email, password}) {
-        console.log(`email: ${email}, password: ${password}`);
         return auth.authorize(email, password)
             .then((res) => {
-                console.log(res);
                 if (res.token) {
                     setUserEmail(email);
                     localStorage.setItem('jwt', res.token);
-                    console.log(res);
                     setLoggedIn(true);
                     navigate("/", {replace: true});
                 }
@@ -126,10 +123,8 @@ function App() {
             })
     }
     function handleRegister({email, password}){
-        console.log(`email: ${email}, password: ${password}`);
         return auth.register(email, password)
             .then((res) => {
-            console.log(res);
             setInfoToolTip(true);
             setSignIn(false);
             setInfoToolTipMessage(true);

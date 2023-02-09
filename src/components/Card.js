@@ -1,6 +1,5 @@
 import { useContext} from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
-import DeleteCardPopup from "./DeleteCardPopup";
 export default function Card(props) {
     const {
         card,
