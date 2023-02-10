@@ -8,7 +8,7 @@ export default function InfoTooltip(props) {
         <div className={`info-tooltip ${infoToolTip ? "popup_opened" : null} `}>
             <div className="info-tooltip__container">
                 <button className="popup__close" type="button" aria-label="кнопка закрытия" onClick={onClose}></button>
-                { infoToolTipMessage ?
+                {infoToolTipMessage ?
                     <>
                         <div className="info-tooltip__img"></div>
                         <p className="info-tooltip__text">Вы успешно зарегистрировались!</p>

@@ -1,18 +1,23 @@
 import FormIn from "./FormIn";
 import {useState} from "react";
-export default function Login({handleLogin}){
+
+export default function Login({handleLogin, setSignIn}) {
     const [userDate, setUserDate] = useState({
         email: '',
         password: '',
     })
+    setSignIn(false);
+
     function handleUserDate(e) {
         const {name, value} = e.target;
-        setUserDate({...userDate, [name]:value});
+        setUserDate({...userDate, [name]: value});
     }
+
     function handleSubmit(e) {
         e.preventDefault();
         handleLogin(userDate);
     }
+
     return (
         <FormIn
             title="Вход"
