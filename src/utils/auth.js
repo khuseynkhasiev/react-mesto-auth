@@ -1,9 +1,6 @@
 const BASE_URL = 'https://auth.nomoreparties.co';
 const getResponse = (res) => {
-    return res.ok ? res.json() :
-        res.status == 400 ?
-            Promise.reject(`Ошибка: ${res.status} - не передано одно из полей`) :
-            Promise.reject(`Ошибка: ${res.status} - пользователь с email не найден `);
+    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 }
 const register = (email, password) => {
     return fetch(`${BASE_URL}/signup`,
