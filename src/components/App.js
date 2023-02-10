@@ -139,14 +139,13 @@ function App() {
     function handleRegister({email, password}) {
         return auth.register(email, password)
             .then((res) => {
-                setInfoToolTip(true);
                 setInfoToolTipMessage(true);
-                //setSignIn(false);
                 navigate("/sign-in", {replace: true});
             }).catch((data) => {
-                setInfoToolTip(true);
                 setInfoToolTipMessage(false);
                 console.log(data);
+            }).finally(()=>{
+                setInfoToolTip(true);
             });
     }
 
@@ -171,6 +170,8 @@ function App() {
                 setUserEmail(res.data.email);
                 setLoggedIn(true);
                 navigate("/", {replace: true});
+            }).catch((data) => {
+                console.log(data);
             })
         }
     }
