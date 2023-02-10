@@ -1,18 +1,22 @@
 import FormIn from "./FormIn";
 import {useState} from "react";
-export default function Register({handleRegister, handleButtonSignIn}){
+
+export default function Register({handleRegister, handleButtonSignIn, setSignIn}) {
     const [userDate, setUserDate] = useState({
         email: '',
         password: '',
     })
-    function handleUserDate(e){
+    setSignIn(true);
+    function handleUserDate(e) {
         const {name, value} = e.target;
         setUserDate({...userDate, [name]: value})
     }
+
     function handleSubmit(e) {
         e.preventDefault();
         handleRegister(userDate);
     }
+
     return (
         <FormIn
             title="Регистрация"
@@ -21,9 +25,9 @@ export default function Register({handleRegister, handleButtonSignIn}){
             handleUserDate={handleUserDate}
             handleSubmit={handleSubmit}
         >
-                <p className="form__subtext">
-                    Уже зарегистрированы?<span className="form__link" onClick={handleButtonSignIn}> Войти</span>
-                </p>
+            <p className="form__subtext">
+                Уже зарегистрированы?<span className="form__link" onClick={handleButtonSignIn}> Войти</span>
+            </p>
         </FormIn>
     )
 }

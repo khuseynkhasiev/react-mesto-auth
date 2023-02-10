@@ -1,9 +1,9 @@
-export default function Header(props){
+export default function Header(props) {
     const {
         email,
         handleUserExit,
         loggedIn,
-        singIn,
+        signIn,
         handleButtonSignIn,
         handleButtonSignUp,
     } = props;
@@ -12,22 +12,22 @@ export default function Header(props){
             <div className="header__logo"></div>
             <nav className="header__nav">
                 <ul className="header__list">
-                    { email ?
+                    {email ?
                         <li className="header__el">
                             <button className="header__btn">{email}</button>
                         </li> : null
                     }
-                    { loggedIn ?
+                    {loggedIn ?
                         <li className="header__el">
                             <button className="header__btn" onClick={handleUserExit}>Выйти</button>
                         </li> :
-                        singIn ?
-                        <li className="header__el">
-                            <button className="header__btn" onClick={handleButtonSignIn}>Войти</button>
-                        </li> :
-                        <li className="header__el">
-                            <button className="header__btn" onClick={handleButtonSignUp}>Регистрация</button>
-                        </li>
+                        signIn ?
+                            <li className="header__el">
+                                <button className="header__btn" onClick={handleButtonSignIn}>Войти</button>
+                            </li> :
+                            <li className="header__el">
+                                <button className="header__btn" onClick={handleButtonSignUp}>Регистрация</button>
+                            </li>
                     }
                 </ul>
             </nav>

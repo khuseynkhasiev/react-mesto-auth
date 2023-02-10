@@ -1,7 +1,6 @@
-
-const BASE_URL ='https://auth.nomoreparties.co';
+const BASE_URL = 'https://auth.nomoreparties.co';
 const getResponse = (res) => {
-    return res.ok? res.json() : `Ошибка: ${res.status}`;
+    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 }
 const register = (email, password) => {
     return fetch(`${BASE_URL}/signup`,
@@ -30,8 +29,8 @@ const getContent = (token) => {
         {
             headers: {
                 "Content-Type": "application/json",
-                "Authorization" : `Bearer ${token}`
-                }
+                "Authorization": `Bearer ${token}`
+            }
         }).then(getResponse);
 }
 

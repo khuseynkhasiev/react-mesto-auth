@@ -1,4 +1,4 @@
-export default function FormIn(props){
+export default function FormIn(props) {
     const {
         buttonName,
         title,
