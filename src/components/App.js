@@ -36,18 +36,6 @@ function App() {
     /*    const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
         const [deletingCard, setDeletingCard] = useState(null);*/
 
-    /*    useEffect(() => {
-            api.getAllPromise().then(data => {
-                const [
-                    getProfileInfo,
-                    getInitialCards
-                ] = data;
-                setCurrentUser(getProfileInfo);
-                setCards(getInitialCards);
-                checkToken();
-            }).catch((data) => console.log(data.error))
-        }, []);*/
-
     useEffect(() => {
         checkToken();
         if (loggedIn) {

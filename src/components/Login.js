@@ -1,12 +1,14 @@
 import FormIn from "./FormIn";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function Login({handleLogin, setSignIn}) {
     const [userDate, setUserDate] = useState({
         email: '',
         password: '',
     })
-    setSignIn(false);
+    useEffect(() => {
+        setSignIn(false);
+    }, [setSignIn])
 
     function handleUserDate(e) {
         const {name, value} = e.target;
