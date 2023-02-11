@@ -1,5 +1,5 @@
 # Проект Mesto-React-Auth
-### [Ссылка на проект](https://khuseynkhasiev.github.io/mesto-react-auth/)
+### [Ссылка на проект](https://khuseynkhasiev.github.io/react-mesto-auth/)
 
 ## Описание
 Проект создан на Реакте, используется SPA(single page application)
